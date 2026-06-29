@@ -19,7 +19,7 @@ function App() {
   if (!session) {
     return <LoginPage />;
   }
-  return <GameListPage session={session}/>;
+  return <GameListPage session={session} />;
 }
 
-export default App
+export default App;

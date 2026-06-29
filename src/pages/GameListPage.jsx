@@ -41,7 +41,9 @@ function GameListPage({ session }) {
     <div className="max-w-xl mx-auto p-8">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">ツミゲ</h1>
-        <Button variant="outline" onClick={handleSignOut}>ログアウト</Button>
+        <Button variant="outline" onClick={handleSignOut}>
+          ログアウト
+        </Button>
       </div>
       <form onSubmit={addGame} className="flex gap-2 mb-6">
         <input
