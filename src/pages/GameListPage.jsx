@@ -9,6 +9,7 @@ function GameListPage({ session }) {
   const [title, setTitle] = useState("");
   const [editingId, setEditingId] = useState(null);
   const [editingTitle, setEditingTitle] = useState("");
+  const [filter, setFilter] = useState("all");
   async function handleSignOut() {
     await supabase.auth.signOut();
   }
@@ -46,6 +47,8 @@ function GameListPage({ session }) {
   useEffect(() => {
     fetchGames();
   }, []);
+  const visibleGames =
+    filter === "all" ? games : games.filter((game) => game.status === filter);
   return (
     <div className="max-w-xl mx-auto p-8">
       <div className="flex justify-between items-center mb-6">
@@ -54,7 +57,7 @@ function GameListPage({ session }) {
           ログアウト
         </Button>
       </div>
-      <form onSubmit={addGame} className="flex gap-2 mb-6">
+      <form onSubmit={addGame} className="flex gap-2 mb-4">
         <input
           value={title}
           onChange={(e) => setTitle(e.target.value)}
@@ -63,8 +66,34 @@ function GameListPage({ session }) {
         />
         <Button type="submit">追加</Button>
       </form>
+      <div className="flex gap-2 mb-6">
+        <Button
+          variant={filter === "all" ? "default" : "outline"}
+          onClick={() => setFilter("all")}
+        >
+          すべて
+        </Button>
+        <Button
+          variant={filter === "unplayed" ? "default" : "outline"}
+          onClick={() => setFilter("unplayed")}
+        >
+          未プレイ
+        </Button>
+        <Button
+          variant={filter === "playing" ? "default" : "outline"}
+          onClick={() => setFilter("playing")}
+        >
+          プレイ中
+        </Button>
+        <Button
+          variant={filter === "cleared" ? "default" : "outline"}
+          onClick={() => setFilter("cleared")}
+        >
+          クリア済み
+        </Button>
+      </div>
       <div className="space-y-2">
-        {games.map((game) => (
+        {visibleGames.map((game) => (
           <GameCard
             key={game.id}
             game={game}
