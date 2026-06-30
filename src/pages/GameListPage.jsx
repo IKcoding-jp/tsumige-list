@@ -73,12 +73,12 @@ function GameListPage({ session }) {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="ゲームタイトル"
-          className="border rounded px-3 py-2 flex-1"
+          className="border rounded-lg px-3 h-8 flex-1"
         />
         <select
           value={platform}
           onChange={(e) => setPlatform(e.target.value)}
-          className="border rounded px-3 py-2"
+          className="border rounded-lg px-3 h-8"
         >
           <option value="">未設定</option>
           {PLATFORMS.map((p) => (
@@ -117,7 +117,7 @@ function GameListPage({ session }) {
         <select
           value={platformFilter}
           onChange={(e) => setPlatformFilter(e.target.value)}
-          className="border rounded px-3 py-2"
+          className="border rounded-lg px-3 h-8"
         >
           <option value="all">すべて</option>
           {PLATFORMS.map((p) => (

@@ -18,11 +18,12 @@ function GameCard({ game, onEdit, onDelete, onStatusChange }) {
           variant="outline"
           onClick={() => onStatusChange(game.id, nextStatus(game.status))}
           className={
-            game.status === "playing"
+            "w-20 " +
+            (game.status === "playing"
               ? "border-blue-500 text-blue-500"
               : game.status === "cleared"
                 ? "border-green-600 text-green-600"
-                : "text-gray-500"
+                : "text-gray-500")
           }
         >
           {game.status === "unplayed"
