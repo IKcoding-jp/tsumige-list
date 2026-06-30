@@ -6,9 +6,7 @@
 
 ## スクリーンショット
 
-![ゲーム一覧画面](docs/screenshot.png)
-
-<!-- 撮影した一覧画面のスクリーンショットを docs/screenshot.png に配置してください -->
+![ゲーム一覧画面](docs/image.png)
 
 ## ライブデモ
 
