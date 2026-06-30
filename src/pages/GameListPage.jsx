@@ -1,14 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { STATUS } from "@/utils/status";
 import { PLATFORM } from "@/utils/platform";
-import supabase from "../lib/supabase";
+import { useGames } from "../hooks/useGames";
 import GameCard from "../components/GameCard";
 import GameModal from "../components/GameModal";
 import Header from "../components/Header";
+import supabase from "../lib/supabase";
 
 function GameListPage({ session }) {
-  const [games, setGames] = useState([]);
+  const { games, addGame, deleteGame, updateGame, updateStatus } =
+    useGames(session);
   const [title, setTitle] = useState("");
   const [platform, setPlatform] = useState("");
   const [editingId, setEditingId] = useState(null);
@@ -18,42 +20,15 @@ function GameListPage({ session }) {
   async function handleSignOut() {
     await supabase.auth.signOut();
   }
-  async function fetchGames() {
-    const { data } = await supabase
-      .from("games")
-      .select("*")
-      .order("created_at", { ascending: true });
-    setGames(data ?? []);
-  }
-  async function addGame(e) {
+
+  async function handleAddGame(e) {
     e.preventDefault();
     if (!title) return;
-    await supabase.from("games").insert({
-      title,
-      user_id: session.user.id,
-      status: "unplayed",
-      platform: platform || null,
-    });
+    await addGame({ title, platform });
     setTitle("");
     setPlatform("");
-    fetchGames();
   }
-  async function deleteGame(id) {
-    await supabase.from("games").delete().eq("id", id);
-    fetchGames();
-  }
-  async function updateGame(id) {
-    await supabase.from("games").update({ title: editingTitle }).eq("id", id);
-    setEditingId(null);
-    fetchGames();
-  }
-  async function updateStatus(id, status) {
-    await supabase.from("games").update({ status }).eq("id", id);
-    fetchGames();
-  }
-  useEffect(() => {
-    fetchGames();
-  }, []);
+
   const visibleGames = games.filter((game) => {
     const statusOk = filter === "all" || game.status === filter;
 
@@ -68,7 +43,7 @@ function GameListPage({ session }) {
   return (
     <div className="max-w-xl mx-auto p-8">
       <Header onSignOut={handleSignOut} />
-      <form onSubmit={addGame} className="flex gap-2 mb-4">
+      <form onSubmit={handleAddGame} className="flex gap-2 mb-4">
         <input
           value={title}
           onChange={(e) => setTitle(e.target.value)}
@@ -138,7 +113,7 @@ function GameListPage({ session }) {
           value={editingTitle}
           onChange={(e) => setEditingTitle(e.target.value)}
           onCancel={() => setEditingId(null)}
-          onSave={() => updateGame(editingId)}
+          onSave={() => updateGame(editingId, editingTitle)}
         />
       )}
     </div>
