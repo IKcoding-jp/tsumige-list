@@ -1,4 +1,4 @@
-# 積みゲートラッカー（ツミゲ）
+# ツミゲリスト
 
 > 持っているゲームと進行状況（未プレイ / プレイ中 / クリア済み）を一元管理する Web アプリ。
 
@@ -10,7 +10,7 @@
 
 ## ライブデモ
 
-🔗 **https://tsumige-tracker.vercel.app/**
+🔗 **https://tsumige-list.vercel.app/**
 
 > ※ ログインが必要です。手元で動かすには Supabase のキー設定が必要なため、動作を試す場合はライブデモの利用を推奨します。
 
@@ -57,8 +57,8 @@ Steam などストア内にはライブラリ機能がありますが、**Switch
 ## セットアップ
 
 ```bash
-git clone https://github.com/IKcoding-jp/tsumige-tracker.git
-cd tsumige-tracker
+git clone https://github.com/IKcoding-jp/tsumige-list.git
+cd tsumige-list
 npm install
 
 # .env.local を作成し、Supabase の URL と ANON KEY を設定
